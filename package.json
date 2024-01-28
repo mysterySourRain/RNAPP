@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "firebase": "^10.7.2",
+    "react-native-safe-area-context": "^4.6.3"
+  }
+}
