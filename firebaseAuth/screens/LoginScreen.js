@@ -27,7 +27,7 @@ export default function LoginScreen() {
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{ backgroundColor: '#FFD700', padding: 8, borderRadius: 20, marginLeft: 16 }}
+            stlyle={{ backgroundColor: '#FFD700', padding: 8, borderRadius: 20, marginLeft: 16 }}
           >
             <ArrowLeftIcon size={20} color="black" />
           </TouchableOpacity>
