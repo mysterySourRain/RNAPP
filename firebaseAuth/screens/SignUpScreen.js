@@ -12,8 +12,6 @@ import { getFirestore, doc, setDoc } from 'firebase/firestore';
 export default function SignUpScreen() {
   // const auth  = getAuth();
   const navigation = useNavigation();
-  const firestoreDb = getFirestore();
-
   const [name, setName] = useState(''); // Add state for user's name
   const [location, setLocation] = useState(''); // Add state for user's location
   const [age, setAge] = useState('');
@@ -25,11 +23,8 @@ export default function SignUpScreen() {
     if(email && password && name){
       try{
         const {user} = await createUserWithEmailAndPassword(auth, email, password);
-        await user.updateProfile({
-          displayName: name,
-        });
 
-        await setDoc(doc(firestoreDb,'users',user.uid),{
+        await setDoc(doc(dbService,'users',user.uid),{
           displayName: name,
           location,
           age,
@@ -37,7 +32,7 @@ export default function SignUpScreen() {
       
       }catch(err){
         console.log('get error: ',err.message);
-        if(err.message == "Firebase: Error (auth/email-already-in-use)."){
+        if(err.message && err.message == "Firebase: Error (auth/email-already-in-use)."){
           setEmailInUse(true);
         }
       }
@@ -83,6 +78,7 @@ export default function SignUpScreen() {
             onChangeText={value => setEmail(value)}
             placeholder='Enter Email'
             keyboardType="email-address"
+            autoCapitalize="none"
           />
           <Text style={{ color: 'gray', marginLeft: 16 }}>Password</Text>
           <TextInput

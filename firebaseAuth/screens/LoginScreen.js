@@ -6,6 +6,7 @@ import { themeColors } from '../theme';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase'
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
 export default function LoginScreen() {
   const navigation = useNavigation();

@@ -3,10 +3,13 @@ import React from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   const handleLogout = async ()=>{
     await signOut(auth);
+    navigation.navigate('Welcome');
   }
   return (
     <SafeAreaView style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
