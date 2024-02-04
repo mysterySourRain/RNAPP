@@ -14,6 +14,7 @@ const Stack = createNativeStackNavigator();
 export default function AppNavigation() {
   const {user} = useAuth();
   if(user){
+    //logged in
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Home'>
@@ -22,6 +23,7 @@ export default function AppNavigation() {
       </NavigationContainer>
     )
   }else{
+    //not logged in
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Welcome'>
