@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp,getApp } from "firebase/app";
 import {collection, getFirestore } from "firebase/firestore";
-import {getStorage} from "firebase/storage"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { initializeAuth, getAuth, getReactNativePersistence } from 'firebase/auth';
@@ -15,17 +14,18 @@ const firebaseConfig = {
   projectId: "login-94e03",
   storageBucket: "login-94e03.appspot.com",
   messagingSenderId: "576139769594",
-  appId: "1:576139769594:web:7f9269bd8b6c4b25373b43",
-  measurementId: "G-C28JB2WR3H"
+  appId: "1:576139769594:web:7f9269bd8b6c4b25373b43"
 };
 
 // initialize Firebase App
 const app = initializeApp(firebaseConfig);
 // initialize Firebase Auth for that app immediately
-export const auth = initializeAuth(app, {
+const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 });
-export const dbService = getFirestore(app);
+const db = getFirestore(app);
 
-export const tripsRef = collection(dbService, 'trips');
-export const expenseRef = collection(dbService,'expense');
+const tripsRef = collection(db, 'trips');
+const expenseRef = collection(db,'expense');
+
+export {auth, db, tripsRef, expenseRef};
