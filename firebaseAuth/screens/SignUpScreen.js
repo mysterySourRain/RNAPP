@@ -5,10 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { app, auth, dbService, storageService } from '../config/firebase';
 import { getFirestore, doc, setDoc, addDoc } from 'firebase/firestore';
-// import {createUser} from "../hooks/userInfo"
-import { tripsRef } from '../config/firebase'
+import {auth, db, tripsRef, expenseRef} from '../config/firebase';
+// import { auth } from '../config/firebase';
 
 export default function SignUpScreen() {
   // const auth  = getAuth();
@@ -21,16 +20,19 @@ export default function SignUpScreen() {
   const [emailInUse,setEmailInUse] = useState(false);
   // const [displayName, setDisplayName] = useState('');
   // const {params} = useRoute();
+  // const {user} = useSelector(state=> state.user);
 
   const handleSubmit = async()=>{
     if(email && password && name){
       try{
-        const {user} = await createUserWithEmailAndPassword(auth, email, password);
-        let doc = await addDoc(tripsRef, {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        await addDoc(tripsRef, {
           age, 
           location, 
           userId: user.uid
         });
+        console.log(age, location);
         
       }catch(err){
         console.log('get error: ',err.message);
