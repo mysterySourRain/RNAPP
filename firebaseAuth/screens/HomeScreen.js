@@ -26,10 +26,10 @@ export default function HomeScreen() {
       let data = [];
       querySnapshot.forEach(doc=>{
           console.log('documement: ',doc.data());
-          data.push({...doc.data(), id: doc.id})
+          data.push({...doc.data(), id: doc.id});
       })
       setInfo(data);
-      console.log("data is here", info.age);
+      console.log("data is here", info[0]?.age);
       // console.log(data);
     }
     catch (error) {

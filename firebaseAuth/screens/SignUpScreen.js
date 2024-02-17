@@ -48,16 +48,13 @@ export default function SignUpScreen() {
       <SafeAreaView style={{ flex: 0, backgroundColor: themeColors.bg }} />
       <View style={{ flex: 0.5 }}>
         
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-start',marginTop:10, marginBottom:10 }}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{ backgroundColor: '#FFD700', padding: 8, borderRadius: 20, marginLeft: 16 }}
           >
             <ArrowLeftIcon size={20} color="black" />
           </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <Image source={require('../assets/images/signup.png')} style={{ width: 165, height: 140 }} />
         </View>
       </View>
       <View style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30, flex: 1, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 20 }}>
@@ -113,7 +110,7 @@ export default function SignUpScreen() {
           </TouchableOpacity>
         </View>
         <Text style={{ fontSize: 20, color: 'gray', fontWeight: 'bold', textAlign: 'center', paddingTop: 5 }}>Or</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 7 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 7 , marginBottom:40}}>
           <TouchableOpacity style={{ padding: 10, backgroundColor: '#F0F0F0', borderRadius: 20, marginRight: 12 }}>
             <Image source={require('../assets/icons/google.png')} style={{ width: 40, height: 40 }} />
           </TouchableOpacity>
