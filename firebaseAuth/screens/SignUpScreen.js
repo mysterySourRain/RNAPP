@@ -4,10 +4,10 @@ import { themeColors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword,updateProfile  } from 'firebase/auth';
 import { getFirestore, doc, setDoc, addDoc } from 'firebase/firestore';
 import {auth, db, tripsRef} from '../config/firebase';
-import { firebase } from '@react-native-firebase/firestore';
+// import { firebase } from '@react-native-firebase/firestore';
 // import { auth } from '../config/firebase';
 
 export default function SignUpScreen() {
@@ -34,9 +34,14 @@ export default function SignUpScreen() {
           userId: user.uid
         });
         console.log(age, location);
-        await updateProfile(user, {
-          displayName: name
-        });
+        try {
+          await updateProfile(user, {
+            displayName: name // Set the displayName property to the new name
+          });
+          console.log('Display name updated successfully', name, name.displayName);
+        } catch (error) {
+          console.error('Error updating display name:', error);
+        }
       }catch(err){
         console.log('get error: ',err.message);
         if(err.message && err.message == "Firebase: Error (auth/email-already-in-use)."){

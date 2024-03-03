@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
 import { doc,collection, getDocs,where, query } from 'firebase/firestore';
 
-const useFirestoreData = (uid) => {
+export const useFirestoreData = (uid) => {
   const [docData, setDocData] = useState([]);
 
   useEffect(() => {
@@ -26,5 +26,3 @@ const useFirestoreData = (uid) => {
 
   return docData;
 };
-
-export default useFirestoreData;
