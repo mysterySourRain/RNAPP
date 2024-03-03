@@ -6,7 +6,8 @@ import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, setDoc, addDoc } from 'firebase/firestore';
-import {auth, db, tripsRef, expenseRef} from '../config/firebase';
+import {auth, db, tripsRef} from '../config/firebase';
+import { firebase } from '@react-native-firebase/firestore';
 // import { auth } from '../config/firebase';
 
 export default function SignUpScreen() {
@@ -18,7 +19,7 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailInUse,setEmailInUse] = useState(false);
-  // const [displayName, setDisplayName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   // const {params} = useRoute();
   // const {user} = useSelector(state=> state.user);
 
@@ -33,7 +34,9 @@ export default function SignUpScreen() {
           userId: user.uid
         });
         console.log(age, location);
-        
+        await updateProfile(user, {
+          displayName: name
+        });
       }catch(err){
         console.log('get error: ',err.message);
         if(err.message && err.message == "Firebase: Error (auth/email-already-in-use)."){

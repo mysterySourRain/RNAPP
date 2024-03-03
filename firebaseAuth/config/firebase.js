@@ -20,11 +20,10 @@ const firebaseConfig = {
 // initialize Firebase App
 const app = initializeApp(firebaseConfig);
 // initialize Firebase Auth for that app immediately
-export const auth = initializeAuth(app, {
+const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 });
 const db = getFirestore(app);
 
-export const tripsRef = collection(db, 'trips');
-// const expenseRef = collection(db,'expense');
-// export {auth, db, tripsRef, expenseRef};
+const tripsRef = collection(db, 'trips');
+export {auth, db, tripsRef};

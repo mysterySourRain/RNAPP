@@ -1,14 +1,30 @@
-import firestore from "@react-native-firebase/firestore";
+import { useEffect, useState } from 'react';
+import { auth, db } from '../config/firebase';
+import { doc,collection, getDocs,where, query } from 'firebase/firestore';
 
-export const userCollection = firestore().collection("users");
+const useFirestoreData = (uid) => {
+  const [docData, setDocData] = useState([]);
 
-export function createUser({id, displayName, photoURL}) {
-  return userCollection.doc(id).set({
-    id, displayName, photoURL
-  });
+  useEffect(() => {
+    const fetchDoc = async () => {
+      try {
+        const q = query(collection(db,"trips"), where("userId", "==",uid));
+        const querySnapshot = await getDocs(q);
+        const data = [];
+        querySnapshot.forEach((doc) => {
+          data.push({ id: doc.id, ...doc.data() });
+          console.log(doc.id, "=>",doc.data());
+        })
+        setDocData(data);
+        
+      } catch (error) {
+        console.error("Error fetching document:", error);
+      }
+    };
+    fetchDoc();
+  }, [uid]);
+
+  return docData;
 };
 
-export async function getUser(id) {
-  const doc = await userCollection.doc(id).get();
-  return doc.data();
-}
+export default useFirestoreData;
