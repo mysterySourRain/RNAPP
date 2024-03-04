@@ -7,6 +7,8 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import useAuth from '../hooks/useAuth';
+import RideRequestScreen from '../screens/RideRequestScreen';
+import DriverScreen from '../screens/DriverScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +21,8 @@ export default function AppNavigation() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Home'>
           <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen} />
+          <Stack.Screen name="RideRequest" options={{headerShown: false}} component={RideRequestScreen} />
+          <Stack.Screen name="Driver" options={{headerShown: false}} component={DriverScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     )

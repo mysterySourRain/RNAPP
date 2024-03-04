@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput,ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput,ScrollView,StyleSheet } from 'react-native';
 import React,{useState} from 'react';
 import { themeColors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,11 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword,updateProfile  } from 'firebase/auth';
 import { getFirestore, doc, setDoc, addDoc } from 'firebase/firestore';
 import {auth, db, tripsRef} from '../config/firebase';
-// import { firebase } from '@react-native-firebase/firestore';
-// import { auth } from '../config/firebase';
 
 export default function SignUpScreen() {
-  // const auth  = getAuth();
   const navigation = useNavigation();
   const [name, setName] = useState(''); // Add state for user's name
   const [location, setLocation] = useState(''); // Add state for user's location
@@ -20,8 +17,6 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState('');
   const [emailInUse,setEmailInUse] = useState(false);
   const [displayName, setDisplayName] = useState('');
-  // const {params} = useRoute();
-  // const {user} = useSelector(state=> state.user);
 
   const handleSubmit = async()=>{
     if(email && password && name){
@@ -72,9 +67,9 @@ export default function SignUpScreen() {
           </View>
         )}
         <View style={{ marginBottom: 4 }}>
-          <Text style={{ color: 'gray', marginLeft: 16 }}>Full Name</Text>
+          <Text style={style.heading}>Full Name</Text>
           <TextInput
-            style={{ padding: 16, backgroundColor: '#F0F0F0', color: 'gray', borderRadius: 20, marginBottom: 3 }}
+            style={style.textContainer}
             value={name}
             onChangeText={value => setName(value)}
             placeholder='Enter Name'
@@ -82,31 +77,31 @@ export default function SignUpScreen() {
           />
           <Text style={{ color: 'gray', marginLeft: 16}}>Email Address</Text>
           <TextInput
-            style={{ padding: 16, backgroundColor: '#F0F0F0', color: 'gray', borderRadius: 20, marginBottom: 3 }}
+            style={style.textContainer}
             value={email}
             onChangeText={value => setEmail(value)}
             placeholder='Enter Email'
             keyboardType="email-address"
             autoCapitalize="none"
           />
-          <Text style={{ color: 'gray', marginLeft: 16 }}>Password</Text>
+          <Text style={style.heading}>Password</Text>
           <TextInput
-            style={{ padding: 16, backgroundColor: '#F0F0F0', color: 'gray', borderRadius: 20, marginBottom: 7 }}
+            style={style.textContainer}
             secureTextEntry
             value={password}
             onChangeText={value => setPassword(value)}
             placeholder='Enter Password'
           />
-          <Text style={{ color: 'gray', marginLeft: 16 }}>Location</Text>
+          <Text style={style.heading}>Location</Text>
           <TextInput
-            style={{ padding: 16, backgroundColor: '#F0F0F0', color: 'gray', borderRadius: 20, marginBottom: 7 }}
+            style={style.textContainer}
             value={location}
             onChangeText={value => setLocation(value)}
             placeholder='Enter Location'
           />
-          <Text style={{ color: 'gray', marginLeft: 16 }}>Age</Text>
+          <Text style={style.heading}>Age</Text>
           <TextInput
-            style={{ padding: 16, backgroundColor: '#F0F0F0', color: 'gray', borderRadius: 20, marginBottom: 7 }}
+            style={style.textContainer}
             value={age}
             onChangeText={value => setAge(value)}
             placeholder='Enter Age'
@@ -118,18 +113,18 @@ export default function SignUpScreen() {
           </TouchableOpacity>
         </View>
         <Text style={{ fontSize: 20, color: 'gray', fontWeight: 'bold', textAlign: 'center', paddingTop: 5 }}>Or</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 7 , marginBottom:40}}>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: '#F0F0F0', borderRadius: 20, marginRight: 12 }}>
-            <Image source={require('../assets/icons/google.png')} style={{ width: 40, height: 40 }} />
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 7 , marginBottom:15}}>
+          <TouchableOpacity style={style.icon}>
+            <Image source={require('../assets/icons/google.png')} style={style.iconImage} />
           </TouchableOpacity>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: '#F0F0F0', borderRadius: 20, marginRight: 12 }}>
-            <Image source={require('../assets/icons/apple.png')} style={{ width: 40, height: 40 }} />
+          <TouchableOpacity style={style.icon}>
+            <Image source={require('../assets/icons/apple.png')} style={style.iconImage} />
           </TouchableOpacity>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: '#F0F0F0', borderRadius: 20 }}>
-            <Image source={require('../assets/icons/facebook.png')} style={{ width: 40, height: 40 }} />
+          <TouchableOpacity style={style.icon}>
+            <Image source={require('../assets/icons/facebook.png')} style={style.iconImage} />
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 7, marginBottom: 50 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 3, marginBottom: 100 }}>
           <Text style={{ color: '#A0A0A0', fontWeight: 'bold' }}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={{ fontWeight: 'bold', color: '#FFD700' }}> Login</Text>
@@ -140,3 +135,10 @@ export default function SignUpScreen() {
     </View>
   );
 }
+
+const style =  StyleSheet.create({
+  textContainer: {padding: 16, backgroundColor: '#F0F0F0', color: 'gray', borderRadius: 20, marginBottom: 7},
+  heading: { color: 'gray', marginLeft: 16,marginBottom:3 },
+  icon: { padding: 10, backgroundColor: '#F0F0F0', borderRadius: 20, marginRight: 12 },
+  iconImage: { width: 40, height: 40 },
+})

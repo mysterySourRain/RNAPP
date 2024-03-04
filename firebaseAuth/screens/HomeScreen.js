@@ -4,47 +4,56 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {useFirestoreData} from '../hooks/userInfo'; 
-// import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
   const user = auth.currentUser;  
   const docData = useFirestoreData(user.uid); // get user info
+  const navigation = useNavigation();
+
   const handleLogout = async ()=>{
     await signOut(auth);
-    // navigation.navigate('Welcome');
+    navigation.navigate('Welcome');
+  }
+
+  const rideRequestForm = async ()=> {
+    navigation.navigate('RideRequest');
+  }
+
+  const driver = async () => {
+    navigation.navigate('Driver');
   }
 
   const filteredData = docData.map(doc => ({ age: doc.age, location: doc.location }));
 
-
   return (
     <SafeAreaView style={styles.container}>
-    <View style= {{flexDirection:'row'}}>
-      <View style={styles.userInfo}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Account</Text>
-      </TouchableOpacity>
-      {filteredData.map((data, index) => (
-        <View key={index} style={{ marginTop: 10 }}>
-          <Text>Name: {user.displayName}</Text>
-          <Text>Age: {data.age}</Text>
-          <Text>Location: {data.location}</Text>
-        </View>))}
-    </View></View>
-    
-    <View style={styles.buttonsContainer}>
+      <View style= {{flexDirection:'row'}}>
+        <View style={styles.userInfo}>
+        <TouchableOpacity style={{ paddingVertical: 12, paddingHorizontal: 20,backgroundColor: '#FFD700',
+              borderRadius: 20,marginBottom: 20,}}>
+          <Text style={styles.buttonText}>{user.displayName}</Text>
+        </TouchableOpacity>
+        {filteredData.map((data, index) => (
+          <View key={index} style={{ marginTop: 10 }}>
+            <Text>Age: {data.age}</Text>
+            <Text>Location: {data.location}</Text>
+          </View>))}
+        </View>
+      </View>
       
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Driver</Text>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection:'row'}}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText} onPress={driver}>Driver</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText} onPress={rideRequestForm}>Ride Request</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity onPress={handleLogout} style={[styles.button, styles.logoutButton]}>
+        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Ride Request</Text>
-      </TouchableOpacity>
-    </View>
-    <TouchableOpacity onPress={handleLogout} style={[styles.button, styles.logoutButton]}>
-      <Text style={styles.buttonText}>Logout</Text>
-    </TouchableOpacity>
-  </SafeAreaView>
+    </SafeAreaView>
   )
 }
 
@@ -66,14 +75,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonsContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    
   },
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 30,
+    paddingHorizontal: 30,
     backgroundColor: '#FFD700',
+    marginLeft: 10,
+    marginRight:10,
     borderRadius: 20,
     marginBottom: 20,
   },
